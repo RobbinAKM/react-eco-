@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 
-import {todos ,isLoading} from './reducers';
+import {todos ,} from './reducers';
 
-const reducers = { todos ,isLoading} ;
+const reducers = { todos ,} ;
 
 const rootReducer = combineReducers(reducers);
 

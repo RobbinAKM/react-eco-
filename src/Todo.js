@@ -3,13 +3,14 @@ import './App.css';
 import {connect} from 'react-redux';
 
 import {loadTodos , removeTodoRequest ,markTodoAsCompletedRequest} from './thunks';
+import {getTodos , getIsLoading ,getIncompleteTodos,getCompleteTodos} from './selectors';
 
 import TodoListItem from './TodoListItem';
 import NewTodoForm from './NewTodoForm';
 
 
 
-const Todo =({todos=[] , onRemovePress ,onCompletedPressed ,isLoading , startLoadingTodos })=>{
+const Todo =({inCompleteTodos,completeTodos , onRemovePress ,onCompletedPressed ,isLoading , startLoadingTodos })=>{
 
   useEffect(()=>{
         startLoadingTodos()
@@ -19,15 +20,20 @@ const loadingMessage =<div> Loading ...</div>
 const content=(
   <div>
   <NewTodoForm/>
-  {todos.map((todo,i)=><TodoListItem key={i} todo={todo} onRemovePress={onRemovePress} onCompletedPressed={onCompletedPressed}/>)}
+  <h1>Incomplete todos:</h1>
+  {inCompleteTodos.map((todo,i)=><TodoListItem key={i} todo={todo} onRemovePress={onRemovePress} onCompletedPressed={onCompletedPressed}/>)}
+
+  <h1>Complete todos:</h1>
+  {completeTodos.map((todo,i)=><TodoListItem key={i} todo={todo} onRemovePress={onRemovePress} onCompletedPressed={onCompletedPressed}/>)}
  </div>
   )
  return isLoading?loadingMessage:content
 };
 
 const mapStateToProps = state=>({
-  todos: state.todos,
-  isLoading:state.isLoading
+  inCompleteTodos:getIncompleteTodos(state) ,
+  completeTodos:getCompleteTodos(state),
+  isLoading:getIsLoading(state)
 })
 
 const mapDispatchToProps= dispatch=>({

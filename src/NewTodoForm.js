@@ -2,6 +2,8 @@ import React ,{useState} from 'react';
 import {connect} from 'react-redux';
 import {addTodoRequests} from './thunks'
 
+import {getTodos} from './selectors';
+
 const NewTodoForm =({todos,onCreatePress })=>{
   const [input , changeInput]= useState('');
   return(
@@ -20,7 +22,7 @@ const NewTodoForm =({todos,onCreatePress })=>{
 }
 
 const mapStateToProps= state =>({
-     todos:state.todos
+     todos:getTodos(state)
 });
 
 const mapDispatchToProps= dispatch =>({
